@@ -44,9 +44,10 @@ namespace Gameplay
 
         private void GenerateEnemies()
         {
+            var totalEnemyType = GameplaySettingsProvider.Instance.EnemyDataArray.Length;
             for (var i = 0; i < _enemySpawnPoints.Length; i++)
             {
-                var enemyModel = new EnemyModel(GameplaySettingsProvider.Instance.EnemyDataArray[i % 4], 
+                var enemyModel = new EnemyModel(GameplaySettingsProvider.Instance.EnemyDataArray[i % totalEnemyType], 
                     _enemySpawnPoints[i].position, _spawnableParent, $"Enemy{i}", _weaponFactory);
                 _disposables.Add(enemyModel);
             }

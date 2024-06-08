@@ -5,24 +5,27 @@ namespace Gameplay.Characters.Enemy
 {
     public class EnemyView : CharacterViewBase
     {
-        [SerializeField] private EnemyStrategyBase _enemyStrategy;
+        [SerializeField] private EnemyStrategyBase[] _enemyStrategyArray;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _enemyStrategy.Activate();
+            foreach (var enemyStrategy in _enemyStrategyArray)
+                enemyStrategy.Activate();
             CharacterType = CharacterType.Enemy;
         }
 
         public override void Kill()
         {
-            _enemyStrategy.Deactivate();
+            foreach (var enemyStrategy in _enemyStrategyArray)
+                enemyStrategy.Deactivate();
             base.Kill();
         }
 
         public override void Reinitialize(Vector3 position)
         {
-            _enemyStrategy.Activate();
+            foreach (var enemyStrategy in _enemyStrategyArray)
+                enemyStrategy.Activate();
             base.Reinitialize(position);
         }
     }
