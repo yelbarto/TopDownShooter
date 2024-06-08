@@ -28,7 +28,7 @@ namespace Gameplay.Characters.Player
         {
             OnFire?.Invoke();
         }
-        
+
         private void OnMousePositionChanged(Vector3 mousePosition)
         {
             CharacterMovementComponent.LookAt(mousePosition);

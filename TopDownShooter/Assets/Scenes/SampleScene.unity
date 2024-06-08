@@ -769,6 +769,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e874258cac21483795670241496a603, type: 2}
   - {fileID: 11400000, guid: 516b3e97235f5469c83ec5fb092f1f86, type: 2}
   - {fileID: 11400000, guid: b378304eaa31e47188af9377a4808cfc, type: 2}
+  - {fileID: 11400000, guid: 4a7fe61ee716c49b09c60a46eedf1995, type: 2}
   _rifleData: {fileID: 11400000, guid: c3adfa7536b6f4a368002223d1d7a171, type: 2}
   _pistolData: {fileID: 11400000, guid: 27dc2e3a694e64ac9a7753ed4ce2a66d, type: 2}
   _rocketLauncherData: {fileID: 11400000, guid: cf90347722be04ab49923738b42023ea, type: 2}

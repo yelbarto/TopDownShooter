@@ -77,10 +77,10 @@ PrefabInstance:
     - target: {fileID: 1809701044547324747, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8dfceef16f6d2453a83161581d4c41bd, type: 2}
+      objectReference: {fileID: 2100000, guid: b35c3bd559dc54acfb5e8f897a182464, type: 2}
     - target: {fileID: 2263843438482879072, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: m_Name
-      value: EngagementChasingEnemy
+      value: EngagementChasingPatrollingEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 3940038817201275715, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: _enemyStrategy
@@ -88,7 +88,7 @@ PrefabInstance:
       objectReference: {fileID: 2502301234471324659}
     - target: {fileID: 3940038817201275715, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: _enemyStrategyArray.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3940038817201275715, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: _enemyStrategyArray.Array.data[0]
@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: _enemyStrategyArray.Array.data[1]
       value: 
       objectReference: {fileID: 7343702009525469520}
+    - target: {fileID: 3940038817201275715, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
+      propertyPath: _enemyStrategyArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 4796571039857244286}
     - target: {fileID: 5668059523043465633, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -151,6 +155,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2263843438482879072, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7343702009525469520}
+    - targetCorrespondingSourceObject: {fileID: 2263843438482879072, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4796571039857244286}
   m_SourcePrefab: {fileID: 100100000, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
 --- !u!114 &1253292336522433761 stripped
 MonoBehaviour:
@@ -212,4 +219,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colliderListener: {fileID: 72090791662102372}
+  _characterMovementComponent: {fileID: 1253292336522433761}
+--- !u!114 &4796571039857244286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542023536013417305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27729026eb804ac981ce1f515e5eeb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _characterMovementComponent: {fileID: 1253292336522433761}

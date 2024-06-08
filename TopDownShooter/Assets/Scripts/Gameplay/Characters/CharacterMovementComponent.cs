@@ -11,6 +11,7 @@ namespace Gameplay.Characters
         [SerializeField] private float _planeBorders = 49.5f;
         [SerializeField] private float _speed = 10;
         
+        private CancellationTokenSource _movementCts;
         private Transform _transform;
 
         private void Awake()
@@ -26,15 +27,19 @@ namespace Gameplay.Characters
 
         public async UniTask Move_Async(Vector3 target, CancellationToken token)
         {
+            _movementCts?.Cancel();
+            _movementCts = new CancellationTokenSource();
+            using var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(token, _movementCts.Token);
             var position = new Vector3(target.x, 0, target.y);
             position.x = Mathf.Clamp(position.x, -_planeBorders, _planeBorders);
             position.z = Mathf.Clamp(position.z, -_planeBorders, _planeBorders);
             await _transform.DOMove(target, _speed).SetSpeedBased().SetEase(Ease.Linear)
-                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token);
+                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, linkedToken.Token);
         }
 
         public void Move(Vector2 movement)
         {
+            _movementCts?.Cancel();
             var movementVector = new Vector3(movement.x, 0, movement.y);
             _transform.Translate(movementVector * (Time.deltaTime * _speed));
             var position = _transform.position;

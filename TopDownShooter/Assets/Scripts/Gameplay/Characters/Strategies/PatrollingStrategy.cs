@@ -18,7 +18,10 @@ namespace Gameplay.Characters.Strategies
             {
                 var target = new Vector3(Random.Range(-49.5f, 49.5f), 0, Random.Range(-49.5f, 49.5f));
                 _characterMovementComponent.LookAt(target);
-                await _characterMovementComponent.Move_Async(target, StrategyCts.Token);
+                var isCancelled = await _characterMovementComponent
+                    .Move_Async(target, StrategyCts.Token).SuppressCancellationThrow();
+                if (isCancelled && StrategyCts.IsCancellationRequested)
+                    break;
                 // Look around
                 await UniTask.Delay(Random.Range(1000, 3000), cancellationToken: StrategyCts.Token);
             }

@@ -41,6 +41,11 @@ namespace Gameplay.Inventories.Weapons
         {
             return !UpgradableItems.ContainsKey(itemType) || !UpgradableItems[itemType];
         }
+
+        public void RemoveUpgrades()
+        {
+            UpgradableItems.Clear();
+        }
         
         public void UpgradeWeapon(IUpgradableItem itemBase)
         {
@@ -65,7 +70,6 @@ namespace Gameplay.Inventories.Weapons
         {
             if (DateTime.Now.Subtract(_lastFireTime).TotalSeconds < 1f / RateOfFire)
                 return;
-            Debug.Log("Fire");
             _lastFireTime = DateTime.Now;
             _weaponBaseView.PlayFireAnimation_Async(owner, Range, OnImpact, BurstFireAmmoAmount).Forget();
         }

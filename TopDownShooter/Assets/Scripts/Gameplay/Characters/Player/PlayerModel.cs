@@ -26,6 +26,7 @@ namespace Gameplay.Characters.Player
 
         protected override UniTask WaitForRespawn()
         {
+            Weapons[WeaponIndex].RemoveUpgrades();
             return UniTask.CompletedTask;
         }
 
