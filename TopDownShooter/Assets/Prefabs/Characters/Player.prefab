@@ -131,13 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6d6e5dfdaa48d0bdba9b247e907d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterMovementComponent: {fileID: 8854907766255086548}
   _healthBar: {fileID: 2053967823388774601}
   _armorBar: {fileID: 5619485754795729733}
   _weaponHolder: {fileID: 6404272395353696780}
   _physicalBody: {fileID: 5962480234286444428}
   _uiArea: {fileID: 71018500618380726}
   _cameraPositioner: {fileID: 107021367397538991}
-  _movementComponent: {fileID: 8854907766255086548}
 --- !u!4 &5534659706026168237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6436738999953023802, guid: de534ea64d6e74df3bf1133354314564, type: 3}

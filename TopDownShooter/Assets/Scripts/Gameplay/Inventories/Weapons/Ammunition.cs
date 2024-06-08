@@ -43,6 +43,7 @@ namespace Gameplay.Inventories.Weapons
             _transform.LookAt(destination);
             _impactAction = impactAction;
             _owner = owner;
+            Debug.DrawLine(ignitionPosition, destination, Color.red, 0.2f);
             
             Move_Async(destination).Forget();
         }

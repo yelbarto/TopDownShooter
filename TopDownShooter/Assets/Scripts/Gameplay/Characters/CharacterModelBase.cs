@@ -22,7 +22,7 @@ namespace Gameplay.Characters
         private readonly int _initialHealth;
         private readonly int _initialArmor;
 
-        public CharacterModelBase(CharacterData characterData, Vector3 originPoint, Transform parent, 
+        protected CharacterModelBase(CharacterData characterData, Vector3 originPoint, Transform parent, 
             string name, WeaponFactory weaponFactory)
         {
             _initialHealth = 100;
@@ -36,6 +36,12 @@ namespace Gameplay.Characters
             CharacterView.name = name;
             CharacterView.OnDamageReceived += OnDamageReceived;
             _lifetimeCts = new CancellationTokenSource();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            SetUpViewEvents();
         }
 
         protected virtual void SetUpViewEvents()

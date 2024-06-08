@@ -20,13 +20,14 @@ namespace Gameplay.Characters.Strategies
 
         protected override void StartStrategy()
         {
-            
+            if (_engageTarget != null)
+            {
+                EngageTarget_Async().Forget();
+            }
         }
         
         private void OnTriggerEnter(Collider other)
         {
-            if (StrategyCts == null) return;
-            if (StrategyCts.IsCancellationRequested) return;
             if (!other.TryGetComponent(out IDamageable damageable) ||
                 damageable.CharacterType != CharacterType.Player) return;
             _characterMovementComponent.LookAt(other.transform.position);
@@ -36,8 +37,9 @@ namespace Gameplay.Characters.Strategies
 
         private async UniTask EngageTarget_Async()
         {
-            while (StrategyCts.IsCancellationRequested && _engageTarget != null)
+            while (!StrategyCts.IsCancellationRequested && _engageTarget != null)
             {
+                Debug.Log("Engaging target");
                 _characterMovementComponent.LookAt(_engageTarget.position);
                 _characterViewBase.OnFire?.Invoke();
                 await UniTask.Delay(100, cancellationToken: StrategyCts.Token);
@@ -46,8 +48,7 @@ namespace Gameplay.Characters.Strategies
         
         private void OnTriggerExit(Collider other)
         {
-            if (!StrategyCts.IsCancellationRequested && other.TryGetComponent(out IDamageable damageable) &&
-                damageable.CharacterType == CharacterType.Player)
+            if (other.TryGetComponent(out IDamageable damageable) && damageable.CharacterType == CharacterType.Player)
             {
                 _engageTarget = null;
             }

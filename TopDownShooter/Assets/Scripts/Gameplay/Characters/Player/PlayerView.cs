@@ -7,7 +7,6 @@ namespace Gameplay.Characters.Player
     public class PlayerView : CharacterViewBase
     {
         [SerializeField] private Transform _cameraPositioner;
-        [SerializeField] private CharacterMovementComponent _movementComponent;
         
         public Action<IUpgradableItem> TryUpgradeWeapon;
         
@@ -32,12 +31,12 @@ namespace Gameplay.Characters.Player
         
         private void OnMousePositionChanged(Vector3 mousePosition)
         {
-            _movementComponent.LookAt(mousePosition);
+            CharacterMovementComponent.LookAt(mousePosition);
         }
         
         private void OnMovementKeyPressed(Vector2 movement)
         {
-            _movementComponent.Move(movement);
+            CharacterMovementComponent.Move(movement);
         }
 
         private void OnTriggerEnter(Collider other)

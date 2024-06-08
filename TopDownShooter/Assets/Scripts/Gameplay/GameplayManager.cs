@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Gameplay.Characters;
+using Gameplay.Characters.Enemy;
 using Gameplay.Characters.Player;
 using Gameplay.Helpers;
 using Gameplay.Inventories.UpgradableItems;
@@ -45,7 +46,7 @@ namespace Gameplay
         {
             for (var i = 0; i < _enemySpawnPoints.Length; i++)
             {
-                var enemyModel = new CharacterModelBase(GameplaySettingsProvider.Instance.EnemyDataArray[i % 4], 
+                var enemyModel = new EnemyModel(GameplaySettingsProvider.Instance.EnemyDataArray[i % 4], 
                     _enemySpawnPoints[i].position, _spawnableParent, $"Enemy{i}", _weaponFactory);
                 _disposables.Add(enemyModel);
             }

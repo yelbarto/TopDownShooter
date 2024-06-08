@@ -19,16 +19,8 @@ namespace Gameplay.Characters.Strategies
             _transform = transform;
         }
 
-        public override void Deactivate()
-        {
-            base.Deactivate();
-            _chasingTarget = null;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
-            if (StrategyCts == null) return;
-            if (StrategyCts.IsCancellationRequested) return;
             if (_chasingTarget != null) return;
             if (!other.TryGetComponent(out IDamageable damageable) ||
                 damageable.CharacterType != CharacterType.Player) return;
@@ -40,17 +32,18 @@ namespace Gameplay.Characters.Strategies
         {
             while (_chasingTarget != null && !StrategyCts.IsCancellationRequested)
             {
-                var chasingPosition = _chasingTarget.position - _transform.position;
+                var chasingPosition = _chasingTarget.position;
+                var chasingVector = chasingPosition - _transform.position;
                 _characterMovementComponent.LookAt(chasingPosition);
                 //Normalize the vector to make the enemy move with the same speed in all directions
-                _characterMovementComponent.Move(new Vector2(chasingPosition.x, chasingPosition.z).normalized);
+                _characterMovementComponent.Move(new Vector2(chasingVector.x, chasingVector.z).normalized);
                 await UniTask.NextFrame(StrategyCts.Token);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (!StrategyCts.IsCancellationRequested && other.transform == _chasingTarget)
+            if (other.transform == _chasingTarget)
             {
                 _chasingTarget = null;
             }
@@ -58,7 +51,10 @@ namespace Gameplay.Characters.Strategies
 
         protected override void StartStrategy()
         {
-            //Do nothing
+            if (_chasingTarget != null)
+            {
+                Chase_Async().Forget();
+            }
         }
 
         private void OnDestroy()

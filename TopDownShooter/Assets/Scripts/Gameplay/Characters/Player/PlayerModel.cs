@@ -14,8 +14,6 @@ namespace Gameplay.Characters.Player
             base(GameplaySettingsProvider.Instance.PlayerData, originPoint, parent, "Player", weaponFactory)
         {
             InputController.Instance.OnAlphaKeyPressed += OnAlphaKeyPressed;
-            
-            SetUpViewEvents();
         }
 
         protected sealed override void SetUpViewEvents()

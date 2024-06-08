@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033885289790998339, guid: de534ea64d6e74df3bf1133354314564, type: 3}
+      propertyPath: _speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -97,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf629b9f4c6436a8caa204f808d1a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterMovementComponent: {fileID: 8684349674551147992}
   _healthBar: {fileID: 2226706126273414853}
   _armorBar: {fileID: 5736351395111155017}
   _weaponHolder: {fileID: 6523317246309743616}
@@ -124,3 +129,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5583443630705886875, guid: de534ea64d6e74df3bf1133354314564, type: 3}
   m_PrefabInstance: {fileID: 1728003604098120347}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8684349674551147992 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8033885289790998339, guid: de534ea64d6e74df3bf1133354314564, type: 3}
+  m_PrefabInstance: {fileID: 1728003604098120347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263843438482879072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7413a241f0d2429cbcbae7050e4adb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

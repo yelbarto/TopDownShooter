@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Characters
 {
     public class CharacterViewBase : MonoBehaviour, IDamageable
     {
+        [SerializeField] protected CharacterMovementComponent CharacterMovementComponent;
         [SerializeField] private BasicFillbarComponent _healthBar;
         [SerializeField] private BasicFillbarComponent _armorBar;
         [SerializeField] private Transform _weaponHolder;
@@ -33,6 +35,7 @@ namespace Gameplay.Characters
 
         public virtual void Reinitialize(Vector3 position)
         {
+            CharacterMovementComponent.LookAt(Vector3.forward);
             transform.position = position;
             ChangeVisibility(true);
             UpdateHealthArea(1, 1);
