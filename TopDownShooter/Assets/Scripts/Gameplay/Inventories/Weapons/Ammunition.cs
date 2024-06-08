@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Gameplay.Characters;
 using UnityEngine;
+using Utilities;
 using IPoolable = Utilities.IPoolable;
 
 namespace Gameplay.Inventories.Weapons
@@ -11,8 +12,9 @@ namespace Gameplay.Inventories.Weapons
     public class Ammunition : MonoBehaviour, IPoolable
     {
         [SerializeField] private float _speed = 10;
+        [SerializeField] private ColliderListener _colliderListener;
         
-        private Action<IDamageable> _impactAction;
+        private Action<IDamageable, Vector3> _impactAction;
         private CancellationTokenSource _moveCts;
         private Transform _transform;
         private IDamageable _owner;
@@ -20,6 +22,7 @@ namespace Gameplay.Inventories.Weapons
         private void Awake()
         {
             _transform = transform;
+            _colliderListener.OnColliderEnter += OnTriggerEnter;
         }
 
         public void OnDespawn()
@@ -30,9 +33,10 @@ namespace Gameplay.Inventories.Weapons
 
         public void OnSpawn()
         {
+            gameObject.SetActive(true);
         }
 
-        public void Fire(Action<IDamageable> impactAction, Vector3 destination, 
+        public void Fire(Action<IDamageable, Vector3> impactAction, Vector3 destination, 
             IDamageable owner, Vector3 ignitionPosition)
         {
             _transform.position = ignitionPosition;
@@ -46,21 +50,24 @@ namespace Gameplay.Inventories.Weapons
         private async UniTask Move_Async(Vector3 destination)
         {
             _moveCts = new CancellationTokenSource();
-            await _transform.DOMove(destination, _speed).SetSpeedBased()
+            await _transform.DOMove(destination, _speed).SetSpeedBased().SetEase(Ease.Linear)
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, _moveCts.Token);
             AmmunitionProvider.Instance.ReturnAmmunition(this);
         }
         
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IDamageable damageable))
-            {
-                if (damageable == _owner)
-                    return;
-                _moveCts?.Cancel();
-                _impactAction?.Invoke(damageable);
-                AmmunitionProvider.Instance.ReturnAmmunition(this);
-            }
+            if (!other.TryGetComponent(out IDamageable damageable)) return;
+            if (damageable == _owner)
+                return;
+            _moveCts?.Cancel();
+            _impactAction?.Invoke(damageable, transform.position);
+            AmmunitionProvider.Instance.ReturnAmmunition(this);
+        }
+
+        private void OnDestroy()
+        {
+            _colliderListener.OnColliderEnter -= OnTriggerEnter;
         }
     }
 }

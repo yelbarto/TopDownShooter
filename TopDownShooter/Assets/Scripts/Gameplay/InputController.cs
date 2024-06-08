@@ -48,7 +48,6 @@ namespace Gameplay
             var mouseScreenPosition = Input.mousePosition;
             mouseScreenPosition.z = _distanceFromCamera; // Set the distance from the camera
             var mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-            Debug.Log("Mouse World Position: " + mouseWorldPosition);
             OnMousePositionChanged?.Invoke(mouseWorldPosition);
         }
 
@@ -68,19 +67,19 @@ namespace Gameplay
 
         private void CheckMovement()
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 OnMovementKeyPressed?.Invoke(_forwardVector);
             } 
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKey(KeyCode.A))
             {
                 OnMovementKeyPressed?.Invoke(_leftVector);
             } 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKey(KeyCode.S))
             {
                 OnMovementKeyPressed?.Invoke(_backwardVector);
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 OnMovementKeyPressed?.Invoke(_rightVector);
             }

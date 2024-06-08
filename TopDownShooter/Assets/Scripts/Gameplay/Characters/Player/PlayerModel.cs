@@ -40,9 +40,11 @@ namespace Gameplay.Characters.Player
         private void CreateWeapons()
         {
             Weapons = new WeaponBaseModel[3];
-            Weapons[0] = new WeaponBaseModel(GameplaySettingsProvider.Instance.PistolData);
-            Weapons[1] = new WeaponBaseModel(GameplaySettingsProvider.Instance.RifleData);
-            Weapons[2] = new WeaponBaseModel(GameplaySettingsProvider.Instance.RocketLauncherData);
+            Weapons[0] = new WeaponBaseModel(GameplaySettingsProvider.Instance.PistolData, CharacterView.WeaponHolder);
+            Weapons[1] = new WeaponBaseModel(GameplaySettingsProvider.Instance.RifleData, CharacterView.WeaponHolder);
+            Weapons[2] = new RocketLauncherModel(GameplaySettingsProvider.Instance.RocketLauncherData, 
+                CharacterView.WeaponHolder);
+            Weapons[0].SwitchWeapon(true);
         }
         
         private void OnMouseClicked()
@@ -57,12 +59,15 @@ namespace Gameplay.Characters.Player
 
         private void SwitchWeapon(int index)
         {
+            Weapons[WeaponIndex].SwitchWeapon(false);
             WeaponIndex = index;
+            Weapons[WeaponIndex].SwitchWeapon(true);
         }
 
         public override void Dispose()
         {
             base.Dispose();
+            if (InputController.Instance == null) return;
             InputController.Instance.OnAlphaKeyPressed -= OnAlphaKeyPressed;
             InputController.Instance.OnMouseClicked -= OnMouseClicked;
             _playerView.TryUpgradeWeapon -= UseUpgrade;

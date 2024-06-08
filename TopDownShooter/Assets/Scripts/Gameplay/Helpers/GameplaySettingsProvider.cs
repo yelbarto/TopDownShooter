@@ -9,7 +9,7 @@ namespace Gameplay.Helpers
     public class GameplaySettingsProvider : MonoSingleton<GameplaySettingsProvider>
     {
         [SerializeField] private CharacterData _playerData;
-        [SerializeField] private CharacterData[] _enemyDataArray;
+        [SerializeField] private CharacterData _enemyData;
         [SerializeField] private WeaponData _rifleData;
         [SerializeField] private WeaponData _pistolData;
         [SerializeField] private WeaponData _rocketLauncherData;
@@ -18,7 +18,7 @@ namespace Gameplay.Helpers
         [SerializeField] private UpgradableItemData _armorPiercingRoundsData;
         
         public CharacterData PlayerData => _playerData;
-        public CharacterData[] EnemyDataArray => _enemyDataArray;
+        public CharacterData EnemyData => _enemyData;
         public WeaponData RifleData => _rifleData;
         public WeaponData PistolData => _pistolData;
         public WeaponData RocketLauncherData => _rocketLauncherData;

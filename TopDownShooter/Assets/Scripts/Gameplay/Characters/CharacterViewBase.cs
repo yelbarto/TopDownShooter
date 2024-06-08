@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gameplay.Characters
 {
     public class CharacterViewBase : MonoBehaviour, IDamageable
     {
-        [SerializeField] private Image _healthBar;
-        [SerializeField] private Image _armorBar;
-        
+        [SerializeField] private BasicFillbarComponent _healthBar;
+        [SerializeField] private BasicFillbarComponent _armorBar;
+        [SerializeField] private Transform _weaponHolder;
+        public Transform WeaponHolder => _weaponHolder;
         public OnDamageReceivedDelegate OnDamageReceived { get; set; }
         
         private void Awake()
@@ -23,8 +23,8 @@ namespace Gameplay.Characters
 
         public void UpdateHealthArea(float healthPercentage, float armorPercentage)
         {
-            _healthBar.fillAmount = healthPercentage;
-            _armorBar.fillAmount = armorPercentage;
+            _healthBar.UpdateFillbar(healthPercentage);
+            _armorBar.UpdateFillbar(armorPercentage);
         }
 
         protected virtual void OnAwake()

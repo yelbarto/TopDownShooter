@@ -30,25 +30,25 @@ namespace Gameplay.Characters
             Armor = _initialArmor;
             CharacterView = Object.Instantiate(characterData.CharacterViewPrefab, originPoint, Quaternion.identity,
                 parent);
+            CharacterView.OnDamageReceived += OnDamageReceived;
             _lifetimeCts = new CancellationTokenSource();
         }
 
         protected virtual void SetUpViewEvents()
         {
-            CharacterView.OnDamageReceived += OnDamageReceived;
         }
 
         private void OnDamageReceived(int damage, int armorPiercing)
         {
             if (Armor > 0)
             {
-                Armor -= armorPiercing;
+                Armor -= damage - armorPiercing;
                 if (Armor < 0)
                 {
                     Health += Armor;
                     Armor = 0;
                 }
-                damage -= armorPiercing;
+                damage -= damage - armorPiercing;
             }
             Health -= damage;
             if (Health <= 0)

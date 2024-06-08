@@ -6,6 +6,8 @@ namespace Gameplay.Characters.Player
 {
     public class PlayerView : CharacterViewBase
     {
+        [SerializeField] private Transform _cameraPositioner;
+        [SerializeField] private Transform _rotationTransform;
         [SerializeField] private float _speed;
         
         public Action<IUpgradableItem> TryUpgradeWeapon;
@@ -17,12 +19,18 @@ namespace Gameplay.Characters.Player
             InputController.Instance.OnMousePositionChanged += OnMousePositionChanged;
             InputController.Instance.OnMovementKeyPressed += OnMovementKeyPressed;
             _transform = transform;
+            var mainCamera = Camera.main;
+            if (mainCamera == null)
+                throw new Exception("Main camera is not found");
+            var cameraTransform = mainCamera.transform;
+            cameraTransform.SetParent(_cameraPositioner);
+            cameraTransform.localPosition = Vector3.zero;
         }
         
         private void OnMousePositionChanged(Vector3 mousePosition)
         {
             var targetPosition = new Vector3(mousePosition.x, transform.position.y, mousePosition.z);
-            _transform.LookAt(targetPosition);
+            _rotationTransform.LookAt(targetPosition);
         }
         
         private void OnMovementKeyPressed(Vector2 movement)
@@ -41,6 +49,7 @@ namespace Gameplay.Characters.Player
 
         private void OnDestroy()
         {
+            if (InputController.Instance == null) return;
             InputController.Instance.OnMousePositionChanged -= OnMousePositionChanged;
             InputController.Instance.OnMovementKeyPressed -= OnMovementKeyPressed;
         }

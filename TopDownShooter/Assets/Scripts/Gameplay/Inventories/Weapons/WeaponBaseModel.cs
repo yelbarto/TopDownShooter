@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Gameplay.Characters;
 using Gameplay.Inventories.Models;
 using Gameplay.Inventories.UpgradableItems;
@@ -15,22 +16,25 @@ namespace Gameplay.Inventories.Weapons
         public int Range { get; set; }
         public int ArmorPiercingPercentage { get; set; }
         public int AreaOfEffect { get; }
+        public int BurstFireAmmoAmount { get; }
         
         public Dictionary<Type, bool> UpgradableItems { get; } = new();
         
+        protected readonly int ArmorPiercingDamage;
         private readonly WeaponBaseView _weaponBaseView;
-        private readonly int _armorPiercingDamage;
         private DateTime _lastFireTime;
 
-        public WeaponBaseModel(WeaponData weaponData)
+        public WeaponBaseModel(WeaponData weaponData, Transform parent)
         {
             RateOfFire = weaponData.RateOfFire;
             Damage = weaponData.Damage;
             Range = weaponData.Range;
             AreaOfEffect = weaponData.AreaOfEffect;
             ArmorPiercingPercentage = weaponData.ArmorPiercingPercentage;
-            _weaponBaseView = Object.Instantiate(weaponData.WeaponPrefab);
-            _armorPiercingDamage = Damage * (ArmorPiercingPercentage / 100);
+            BurstFireAmmoAmount = weaponData.BurstFireAmmoAmount;
+            _weaponBaseView = Object.Instantiate(weaponData.WeaponPrefab, parent);
+            _weaponBaseView.transform.localPosition = Vector3.zero;
+            ArmorPiercingDamage = (int) Math.Ceiling(Damage * (ArmorPiercingPercentage / 100f));
         }
 
         private bool CanUpgradeWeapon(Type itemType)
@@ -47,19 +51,24 @@ namespace Gameplay.Inventories.Weapons
             itemBase.UseUpgrade(this);
             Debug.Log("Upgrade weapon");
         }
+        
+        public void SwitchWeapon(bool toThis)
+        {
+            _weaponBaseView.gameObject.SetActive(toThis);
+        }
 
         public void Fire(IDamageable owner)
         {
-            if (_lastFireTime.AddSeconds(1.0 / RateOfFire) < DateTime.Now)
+            if (DateTime.Now.Subtract(_lastFireTime).TotalSeconds < 1f / RateOfFire)
                 return;
             Debug.Log("Fire");
             _lastFireTime = DateTime.Now;
-            _weaponBaseView.PlayFireAnimation(owner, Range, OnImpact);
+            _weaponBaseView.PlayFireAnimation_Async(owner, Range, OnImpact, BurstFireAmmoAmount).Forget();
         }
         
-        protected virtual void OnImpact(IDamageable enemy)
+        protected virtual void OnImpact(IDamageable enemy, Vector3 position)
         {
-            enemy.OnDamageReceived(Damage, _armorPiercingDamage);
+            enemy.OnDamageReceived(Damage, ArmorPiercingDamage);
         }
     }
 }

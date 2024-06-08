@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b60645a8e84130a52e00a4d402dadc, type: 3}
+  m_Name: ArmorPiercingRounds
+  m_EditorClassIdentifier: 
+  _upgradableItem: {fileID: 4864490783235772364, guid: 722076042a1c344b183a5e2ed6952291, type: 3}
+  _upgradeValue: {x: 10, y: 20}

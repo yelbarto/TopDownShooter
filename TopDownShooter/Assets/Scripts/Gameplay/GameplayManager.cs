@@ -42,7 +42,7 @@ namespace Gameplay
         {
             for (var i = 0; i < _enemySpawnPoints.Length; i++)
             {
-                var enemyModel = new CharacterModelBase(GameplaySettingsProvider.Instance.EnemyDataArray[i], 
+                var enemyModel = new CharacterModelBase(GameplaySettingsProvider.Instance.EnemyData, 
                     _enemySpawnPoints[i].position, _spawnableParent);
                 _disposables.Add(enemyModel);
             }

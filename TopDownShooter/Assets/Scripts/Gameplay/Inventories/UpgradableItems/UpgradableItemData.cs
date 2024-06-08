@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Gameplay.Inventories.UpgradableItems
 {
+    [CreateAssetMenu(fileName = "UpgradableItemData", menuName = "TopDownShooter/UpgradableItemData")]
     public class UpgradableItemData : ScriptableObject
     {
         [SerializeField] private UpgradableItemBase _upgradableItem;
