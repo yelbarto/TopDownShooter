@@ -10,12 +10,10 @@ namespace Gameplay.Characters.Player
     {
         private PlayerView _playerView;
         
-        public PlayerModel(Vector3 originPoint, Transform parent) : 
-            base(GameplaySettingsProvider.Instance.PlayerData, originPoint, parent)
+        public PlayerModel(Vector3 originPoint, Transform parent, WeaponFactory weaponFactory) : 
+            base(GameplaySettingsProvider.Instance.PlayerData, originPoint, parent, "Player", weaponFactory)
         {
             InputController.Instance.OnAlphaKeyPressed += OnAlphaKeyPressed;
-            InputController.Instance.OnMouseClicked += OnMouseClicked;
-            CreateWeapons();
             
             SetUpViewEvents();
         }
@@ -25,6 +23,7 @@ namespace Gameplay.Characters.Player
             base.SetUpViewEvents();
             _playerView = (PlayerView) CharacterView;
             _playerView.TryUpgradeWeapon += UseUpgrade;
+            CreateWeapons();
         }
 
         protected override UniTask WaitForRespawn()
@@ -40,16 +39,10 @@ namespace Gameplay.Characters.Player
         private void CreateWeapons()
         {
             Weapons = new WeaponBaseModel[3];
-            Weapons[0] = new WeaponBaseModel(GameplaySettingsProvider.Instance.PistolData, CharacterView.WeaponHolder);
-            Weapons[1] = new WeaponBaseModel(GameplaySettingsProvider.Instance.RifleData, CharacterView.WeaponHolder);
-            Weapons[2] = new RocketLauncherModel(GameplaySettingsProvider.Instance.RocketLauncherData, 
-                CharacterView.WeaponHolder);
+            Weapons[0] = CreateWeapon(WeaponType.Pistol);
+            Weapons[1] = CreateWeapon(WeaponType.Rifle);
+            Weapons[2] = CreateWeapon(WeaponType.RocketLauncher);
             Weapons[0].SwitchWeapon(true);
-        }
-        
-        private void OnMouseClicked()
-        {
-            Weapons[WeaponIndex].Fire(CharacterView);
         }
 
         private void OnAlphaKeyPressed(int key)
@@ -69,7 +62,6 @@ namespace Gameplay.Characters.Player
             base.Dispose();
             if (InputController.Instance == null) return;
             InputController.Instance.OnAlphaKeyPressed -= OnAlphaKeyPressed;
-            InputController.Instance.OnMouseClicked -= OnMouseClicked;
             _playerView.TryUpgradeWeapon -= UseUpgrade;
         }
     }

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0234daffaf924b15bb70ac64ab055e7c, type: 3}
-  m_Name: Enemy
+  m_Name: IdleEnemy
   m_EditorClassIdentifier: 
-  _characterViewPrefab: {fileID: 3021871842572786066, guid: 06ec9c07cd7f74a059ac046bc5a61dd4, type: 3}
+  _characterViewPrefab: {fileID: 6866934814370278010, guid: 83fb4c3bffbfc47eda60525daf1489f1, type: 3}

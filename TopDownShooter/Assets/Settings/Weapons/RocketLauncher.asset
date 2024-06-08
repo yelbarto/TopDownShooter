@@ -15,7 +15,7 @@ MonoBehaviour:
   _rateOfFire: 1
   _damage: 60
   _range: 40
-  _areaOfEffect: 20
+  _areaOfEffect: 10
   _armorPiercingPercentage: 60
   _burstFireAmmoAmount: 1
   _weaponPrefab: {fileID: 8323773750876179030, guid: 54d9ddb2c72c746a685f6889c3b0167a, type: 3}

@@ -11,6 +11,7 @@ namespace Gameplay.Inventories.Weapons
 
         protected override void OnImpact(IDamageable enemy, Vector3 position)
         {
+            Debug.Log($"On Impact: Damage {Damage}, ArmorPiercingDamage {ArmorPiercingDamage}");
             var colliders = Physics.OverlapSphere(position, AreaOfEffect);
             foreach (var collider in colliders)
             {

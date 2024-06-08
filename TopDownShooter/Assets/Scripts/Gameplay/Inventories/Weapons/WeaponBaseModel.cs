@@ -45,11 +45,15 @@ namespace Gameplay.Inventories.Weapons
         public void UpgradeWeapon(IUpgradableItem itemBase)
         {
             var type = itemBase.GetType();
-            if (!CanUpgradeWeapon(type)) return;
+            if (!CanUpgradeWeapon(type))
+            {
+                Debug.Log($"Can't upgrade item {itemBase.GetType().Name} to weapon {GetType().Name}");
+                return;
+            }
 
+            Debug.Log($"Upgrade weapon {GetType().Name} with item {itemBase.GetType().Name}");
             UpgradableItems[type] = true;
             itemBase.UseUpgrade(this);
-            Debug.Log("Upgrade weapon");
         }
         
         public void SwitchWeapon(bool toThis)
@@ -68,6 +72,7 @@ namespace Gameplay.Inventories.Weapons
         
         protected virtual void OnImpact(IDamageable enemy, Vector3 position)
         {
+            Debug.Log($"On Impact: Damage {Damage}, ArmorPiercingDamage {ArmorPiercingDamage}");
             enemy.OnDamageReceived(Damage, ArmorPiercingDamage);
         }
     }

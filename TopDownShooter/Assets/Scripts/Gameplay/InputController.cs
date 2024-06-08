@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using Utilities;
 
@@ -6,7 +7,7 @@ namespace Gameplay
 {
     public class InputController : MonoSingleton<InputController>
     {
-        [SerializeField] private float _distanceFromCamera = 10f;
+        [SerializeField] private float _maxRaycastDistance = 50f;
         [SerializeField] private Camera _mainCamera;
         
         public Action<Vector3> OnMousePositionChanged;
@@ -17,14 +18,15 @@ namespace Gameplay
         private Vector2 _backwardVector;
         private Vector2 _leftVector;
         private Vector2 _rightVector;
+        private int _layerMask;
 
-        protected override void SingletonAwakened()
+        private void Start()
         {
-            base.SingletonAwakened();
             _forwardVector = new Vector2(0, 1);
             _backwardVector = new Vector2(0, -1);
             _leftVector = new Vector2(-1, 0);
             _rightVector = new Vector2(1, 0);
+            _layerMask = ~LayerMask.GetMask("Detection");
         }
 
         private void Update()
@@ -45,10 +47,12 @@ namespace Gameplay
 
         private void CheckRotation()
         {
-            var mouseScreenPosition = Input.mousePosition;
-            mouseScreenPosition.z = _distanceFromCamera; // Set the distance from the camera
-            var mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-            OnMousePositionChanged?.Invoke(mouseWorldPosition);
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit, _maxRaycastDistance, _layerMask))
+            {
+                var hitPosition = hit.point;
+                OnMousePositionChanged?.Invoke(hitPosition);
+            }
         }
 
         private void CheckWeaponSwitch()

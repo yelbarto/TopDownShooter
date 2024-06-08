@@ -7,10 +7,16 @@ namespace Utilities
     public class ColliderListener : MonoBehaviour
     {
         public Action<Collider> OnColliderEnter;
+        public Action<Collider> OnColliderExit;
         
         private void OnTriggerEnter(Collider other)
         {
             OnColliderEnter?.Invoke(other);
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            OnColliderExit?.Invoke(other);
         }
     }
 }
