@@ -1,6 +1,7 @@
+using Cysharp.Threading.Tasks;
 using Gameplay.Characters;
+using Gameplay.Helpers;
 using UnityEngine;
-using Utilities;
 
 namespace Gameplay.Inventories.Weapons
 {
@@ -14,7 +15,7 @@ namespace Gameplay.Inventories.Weapons
         {
             Debug.Log($"On Impact: Damage {Damage}, ArmorPiercingDamage {ArmorPiercingDamage}");
             var colliders = Physics.OverlapSphere(position, AreaOfEffect);
-            DebugDraw.DrawSphere(position, AreaOfEffect, Color.magenta, 0.3f);
+            ParticleProvider.Instance.PlayAndReturnParticle_Async(ParticleSystemType.RocketLauncher, position).Forget();
             foreach (var collider in colliders)
             {
                 if (collider.TryGetComponent(out IDamageable damageable))

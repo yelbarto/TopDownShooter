@@ -189,6 +189,7 @@ Transform:
   - {fileID: 1896251987}
   - {fileID: 1875069896}
   - {fileID: 1870920767}
+  - {fileID: 1921552576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283369224
@@ -727,6 +728,7 @@ GameObject:
   - component: {fileID: 998508272}
   - component: {fileID: 998508273}
   - component: {fileID: 998508274}
+  - component: {fileID: 998508275}
   m_Layer: 0
   m_Name: GameplaySettingsProvider
   m_TagString: Untagged
@@ -807,6 +809,24 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _maxRaycastDistance: 100
   _mainCamera: {fileID: 963194227}
+--- !u!114 &998508275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998508270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0b952cda85429fbf3d19784349571c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+  _poolableParticleList:
+  - _particleSystem: {fileID: 955898375142777928, guid: 5f560e5ed48854ea79b14583cbbda9bc, type: 3}
+    _particleSystemType: 0
+    _warmUpAmount: 5
+  _particleParent: {fileID: 1921552576}
 --- !u!1 &1003849071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,6 +1551,37 @@ Transform:
   - {fileID: 1699693799}
   - {fileID: 1504131501}
   - {fileID: 1857234025}
+  m_Father: {fileID: 219534839}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1921552575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1921552576}
+  m_Layer: 0
+  m_Name: ParticleParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1921552576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921552575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 219534839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010885941
