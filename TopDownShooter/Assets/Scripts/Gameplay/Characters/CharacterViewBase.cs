@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gameplay.Characters
 {
@@ -16,7 +15,8 @@ namespace Gameplay.Characters
         public OnDamageReceivedDelegate OnDamageReceived { get; set; }
         public Action OnFire;
         public CharacterType CharacterType { get; protected set; }
-        
+        public bool IsAlive { get; private set; } = true;
+
         private void Awake()
         {
             OnAwake();
@@ -24,6 +24,7 @@ namespace Gameplay.Characters
 
         public virtual void Kill()
         {
+            IsAlive = false;
             ChangeVisibility(false);
         }
 
@@ -35,6 +36,7 @@ namespace Gameplay.Characters
 
         public virtual void Reinitialize(Vector3 position)
         {
+            IsAlive = true;
             CharacterMovementComponent.LookAt(Vector3.forward);
             transform.position = position;
             ChangeVisibility(true);

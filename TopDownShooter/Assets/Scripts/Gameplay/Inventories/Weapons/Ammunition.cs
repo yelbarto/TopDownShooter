@@ -59,8 +59,8 @@ namespace Gameplay.Inventories.Weapons
         private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent(out IDamageable damageable)) return;
-            if (damageable == _owner)
-                return;
+            if (damageable.IsAlive == false) return;
+            if (damageable == _owner) return;
             _moveCts?.Cancel();
             _impactAction?.Invoke(damageable, transform.position);
             AmmunitionProvider.Instance.ReturnAmmunition(this);

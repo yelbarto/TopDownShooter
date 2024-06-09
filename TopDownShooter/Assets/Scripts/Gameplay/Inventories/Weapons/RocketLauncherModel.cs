@@ -18,7 +18,10 @@ namespace Gameplay.Inventories.Weapons
             foreach (var collider in colliders)
             {
                 if (collider.TryGetComponent(out IDamageable damageable))
+                {
+                    if (!damageable.IsAlive) continue;
                     damageable.OnDamageReceived(Damage, ArmorPiercingDamage);
+                }
             }
         }
     }
